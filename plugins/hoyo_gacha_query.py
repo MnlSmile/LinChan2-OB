@@ -181,7 +181,7 @@ async def get_latest_genshin_gacha_pool() -> dict:
 
 async def get_latest_hsr_gacha_pool() -> dict:
     resp = await requests.get('https://homdgcat.wiki/data/banner.js')
-    total_pool = json.loads(resp.text[34:resp.text.index('\nvar _icons = ')])
+    total_pool = json.loads(resp.text[34:resp.text.index('\nvar _index = ')])
     _locals = json.loads(resp.text[resp.text.index('var _index = ') + len('var _index = '):])
     of_latest_known_version = total_pool[0]
     version = of_latest_known_version['V']
