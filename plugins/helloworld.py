@@ -16,7 +16,7 @@ async def bussiness(ev:BotPostEvent) -> None:
     fromqq = ev.user_id
     match rmsg:
         case 'aaaa':
-            await quick_send_group()
+            await quick_send_private(rmsg, fromqq)
     return
 
 transer.set_receiving_parser(ent)
