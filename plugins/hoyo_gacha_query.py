@@ -42,6 +42,10 @@ async def bussiness(ev:BotPostEvent) -> None:
             pool = await get_latest_gacha_pool()
             reply = format_gacha_pool_message(pool)
             await quick_send_group(reply, fromgroup)
+        case '原神卡池':
+            pool = await get_latest_gacha_pool()
+            reply = format_gacha_pool_message(pool)
+            await quick_send_group(reply, fromgroup)
     return
 
 async def get_latest_gacha_pool() -> dict:
