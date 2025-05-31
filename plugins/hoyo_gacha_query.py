@@ -17,15 +17,15 @@ def format_gacha_pool_message(pool:dict) -> str:
         result += '    上半\n' + ' ' * 8
         result += ('\n' + ' ' * 8).join(pool['phase_1']['5_stars'] + pool['phase_1']['4_stars'])
         result += '\n'
-    elif pool['phase_2']['exist']:
+    if pool['phase_2']['exist']:
         result += '    下半\n' + ' ' * 8
         result += ('\n' + ' ' * 8).join(pool['phase_2']['5_stars'] + pool['phase_2']['4_stars'])
         result += '\n'
-    elif pool['phase_unknown']['exist']:
+    if pool['phase_unknown']['exist']:
         result += '    不详\n' + ' ' * 8
         result += ('\n' + ' ' * 8).join(pool['phase_unknown']['5_stars'] + pool['phase_unknown']['4_stars'])
         result += '\n'
-    elif pool['chronicled']['exist']:
+    if pool['chronicled']['exist']:
         result += '    集录\n' + ' ' * 8
         result += ('\n' + ' ' * 8).join(pool['chronicled']['5_stars'] + pool['chronicled']['4_stars'])
         result += '\n'
