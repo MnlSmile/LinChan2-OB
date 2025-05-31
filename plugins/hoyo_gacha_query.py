@@ -49,7 +49,7 @@ async def bussiness(ev:BotPostEvent) -> None:
         case '/git pull':
             def _thread():
                 os.system('git pull')
-            threading.Thread(target=_thread).start(0)
+            threading.Thread(target=_thread).start()
     return
 
 async def get_latest_gacha_pool() -> dict:
