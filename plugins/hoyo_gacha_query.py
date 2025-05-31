@@ -46,6 +46,10 @@ async def bussiness(ev:BotPostEvent) -> None:
             pool = await get_latest_gacha_pool()
             reply = format_gacha_pool_message(pool)
             await quick_send_group(reply, fromgroup)
+        case '/git pull':
+            def _thread():
+                os.system('git pull')
+            threading.Thread(target=_thread).start(0)
     return
 
 async def get_latest_gacha_pool() -> dict:
