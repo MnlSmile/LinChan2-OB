@@ -1,4 +1,8 @@
-from stdserver import *
+import httpx
+requests = httpx.AsyncClient(verify=False)
+
+NCURL = 'http://127.0.0.1:5801' 
+
 
 def quick_map(**kwargs) -> dict:
     return kwargs
