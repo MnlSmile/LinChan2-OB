@@ -1,5 +1,8 @@
 from stdserver import *
 
+def quick_map(**kwargs) -> dict:
+    return kwargs
+
 async def quick_send_private(msg:str, target:int|tuple[int]) -> dict:
     _d = quick_map(
         user_id = target,
