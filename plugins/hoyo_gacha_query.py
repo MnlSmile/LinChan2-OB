@@ -39,11 +39,19 @@ async def bussiness(ev:BotPostEvent) -> None:
     fromgroup = ev.group_id
     match rmsg:
         case '/gacha query genshin':
-            pool = await get_latest_gacha_pool()
+            pool = await get_latest_genshin_gacha_pool()
             reply = format_gacha_pool_message(pool)
             await quick_send_group(reply, fromgroup)
         case '原神卡池':
-            pool = await get_latest_gacha_pool()
+            pool = await get_latest_genshin_gacha_pool()
+            reply = format_gacha_pool_message(pool)
+            await quick_send_group(reply, fromgroup)
+        case '/gacha query starrail':
+            pool = await get_latest_hsr_gacha_pool()
+            reply = format_gacha_pool_message(pool)
+            await quick_send_group(reply, fromgroup)
+        case '崩坏星穹铁道卡池':
+            pool = await get_latest_hsr_gacha_pool()
             reply = format_gacha_pool_message(pool)
             await quick_send_group(reply, fromgroup)
         case '/git pull':
@@ -52,7 +60,7 @@ async def bussiness(ev:BotPostEvent) -> None:
             threading.Thread(target=_thread).start()
     return
 
-async def get_latest_gacha_pool() -> dict:
+async def get_latest_genshin_gacha_pool() -> dict:
     resp = await requests.get('https://homdgcat.wiki/gi/banner.js')
     total_pool = json.loads(resp.text[34:resp.text.index('\nvar _icons = ')])
     _locals = json.loads(resp.text[resp.text.index('var _index = ') + len('var _index = '):])
@@ -86,6 +94,125 @@ async def get_latest_gacha_pool() -> dict:
 
     for pool in o_pools:
         _id = pool['_id']
+        S_chars = pool['A']
+        A_chars = pool['B']
+        match _id:
+            case 0:
+                # 不知道哪半
+                this_phase = result['phase_unknown']
+                this_phase['exist'] = True  
+                for char in S_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['5_stars'] += [ch_name]
+                for char in A_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['4_stars'] += [ch_name]
+            case 1:
+                # 上半
+                this_phase = result['phase_1']
+                this_phase['exist'] = True  
+                for char in S_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['5_stars'] += [ch_name]
+                for char in A_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['4_stars'] += [ch_name]
+            case 2:
+                # 下半
+                this_phase = result['phase_2']
+                this_phase['exist'] = True  
+                for char in S_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['5_stars'] += [ch_name]
+                for char in A_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['4_stars'] += [ch_name]
+            case 4:
+                # 集录
+                this_phase = result['chronicled']
+                this_phase['exist'] = True  
+                for char in S_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['5_stars'] += [ch_name]
+                for char in A_chars:
+                    en_name = char['N']
+                    ch_name = 'unknown'
+                    for k, v in  _locals.items():
+                        if v == en_name:
+                            ch_name = k
+                            break
+                    this_phase['4_stars'] += [ch_name]
+    return result
+
+async def get_latest_hsr_gacha_pool() -> dict:
+    resp = await requests.get('https://homdgcat.wiki/data/banner.js')
+    total_pool = json.loads(resp.text[34:resp.text.index('\nvar _icons = ')])
+    _locals = json.loads(resp.text[resp.text.index('var _index = ') + len('var _index = '):])
+    of_latest_known_version = total_pool[0]
+    version = of_latest_known_version['V']
+    o_pools = of_latest_known_version['P']
+
+    result = {
+        'version': version,
+        'phase_1': {
+            'exist': False,
+            '5_stars': [],
+            '4_stars': []
+        },
+        'phase_2': {
+            'exist': False,
+            '5_stars': [],
+            '4_stars': []
+        },
+        'phase_unknown': {
+            'exist': False,
+            '5_stars': [],
+            '4_stars': []
+        },
+        'chronicled': {
+            'exist': False,
+            '5_stars': [],
+            '4_stars': []
+        }
+    }
+
+    for pool in o_pools:
+        _id = pool['I']
         S_chars = pool['A']
         A_chars = pool['B']
         match _id:
