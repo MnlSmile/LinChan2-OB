@@ -1,7 +1,5 @@
 from stdserver import *
 
-import types
-
 transer = register(__name__)
 
 async def ent(a0:'Message') -> None:
@@ -18,7 +16,7 @@ async def bussiness(ev:BotPostEvent) -> None:
     fromqq = ev.user_id
     match rmsg:
         case 'aaaa':
-            await requests.get(NCURL + '/send_msg', params=quick_map(user_id=fromqq, message=rmsg))
+            await quick_send_group()
     return
 
 transer.set_receiving_parser(ent)

@@ -5,7 +5,9 @@ import fastapi
 import re
 import time
 import datetime
+import asyncio
 import httpx
+import json
 
 from typing import *
 from fastapi import APIRouter, Header
@@ -14,6 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from broadcasting import Transceiver, Message, register
+from quicksend import quick_send_group, quick_send_private
 
 class BotPostEvent(BaseModel):
     time:int
