@@ -20,7 +20,7 @@ async def bussiness(ev:BotPostEvent) -> None:
         case '/like':
             for i in range(20):
                 await requests.get(NCURL + '/send_like', params=quick_map(user_id=ev.user_id))
-                await asyncio.sleep(random.randint(1, 400))
+                await asyncio.sleep(random.randint(1, 400) * 0.001)
     return
 
 transer.set_receiving_parser(ent)
