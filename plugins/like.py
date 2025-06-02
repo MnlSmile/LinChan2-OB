@@ -34,7 +34,7 @@ async def bussiness(ev:BotPostEvent) -> None:
                     ('like', int): like_int
                 }
             )
-    except Exception:
+    except ValueError:
         pass
     return
 
