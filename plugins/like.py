@@ -19,6 +19,7 @@ async def bussiness(ev:BotPostEvent) -> None:
     if not ev.post_type == 'message' and not ev.message_type == 'group':
         return
     fromgroup = ev.group_id
+    print(fromgroup)
     async def like() -> None:
         for i in range(20):
             await requests.get(NCURL + '/send_like', params=quick_map(user_id=ev.qq_id))
