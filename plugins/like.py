@@ -16,8 +16,9 @@ async def parse_ent(ev:BotPostEvent) -> None:
 async def bussiness(ev:BotPostEvent) -> None:
     rmsg = ev.raw_message
     print(rmsg)
-    if not ev.post_type == 'message' and not ev.message_type == 'group':
-        return
+    #if not ev.post_type == 'message' and not ev.message_type == 'group':
+    #    return
+    
     fromgroup = ev.group_id
     print(fromgroup)
     async def like() -> None:
